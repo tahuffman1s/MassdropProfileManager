@@ -58,7 +58,7 @@ namespace MassDropProfileManager
                             "or press the reset button on the back of the keyboard.", "Drop Keyboard Flasher", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                         if(result == System.Windows.Forms.DialogResult.OK)
                         {
-                            dc.flash(mdloader.FullName + " --first --download " + '"' + profilesFolderDirectory.FullName + @"\" + lbProfiles.SelectedItem.ToString() + '"' + " --restart",
+                            dc.flash('"' + mdloader.FullName + '"' + " --first --download " + '"' + profilesFolderDirectory.FullName + @"\" + lbProfiles.SelectedItem.ToString() + '"' + " --restart",
                                 profilesFolderDirectory.FullName + @"\" + lbProfiles.SelectedItem, mdloaderFolderDirectory.FullName);
                         }
                         else

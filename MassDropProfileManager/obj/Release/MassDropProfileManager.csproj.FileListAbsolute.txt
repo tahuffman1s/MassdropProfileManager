@@ -1,0 +1,15 @@
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\bin\Release\MassDropProfileManager.exe.config
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\bin\Release\MassDropProfileManager.exe
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\bin\Release\MassDropProfileManager.pdb
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager.csprojAssemblyReference.cache
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MainWindow.g.cs
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\App.g.cs
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager_MarkupCompile.cache
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager_MarkupCompile.lref
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MainWindow.baml
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager.g.resources
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager.Properties.Resources.resources
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager.csproj.GenerateResource.cache
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager.csproj.CoreCompileInputs.cache
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager.exe
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager.pdb

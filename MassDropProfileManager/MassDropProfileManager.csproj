@@ -98,5 +98,8 @@
   <ItemGroup>
     <Resource Include="drop.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="drop.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
