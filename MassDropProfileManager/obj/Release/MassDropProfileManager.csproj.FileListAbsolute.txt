@@ -13,3 +13,5 @@ C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Re
 C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager.csproj.CoreCompileInputs.cache
 C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager.exe
 C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\MassDropProfileManager.pdb
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\Settings.g.cs
+C:\Users\huffm\source\repos\MassDropProfileManager\MassDropProfileManager\obj\Release\Settings.baml

@@ -32,6 +32,7 @@ namespace MassDropProfileManager
         DirectoryInfo mdloader = new DirectoryInfo(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\mdloader\mdloader_windows.exe");
         DirectoryInfo appletmdflashbinLocation = new DirectoryInfo(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\mdloader\applet-mdflash.bin");
 
+        string profileDirectory = "";
 
         public MainWindow()
         {
@@ -42,6 +43,15 @@ namespace MassDropProfileManager
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            if (Properties.Settings.Default.UseDefaultProfileFolder)
+            {
+                profileDirectory = profilesFolderDirectory.FullName;
+                Properties.Settings.Default.ProfileFolderLocation = profilesFolderDirectory.FullName;
+            }
+            else
+            {
+                profileDirectory = Properties.Settings.Default.ProfileFolderLocation;
+            }
             refreshListBox();
         }
 
@@ -58,16 +68,16 @@ namespace MassDropProfileManager
                             "or press the reset button on the back of the keyboard.", "Drop Keyboard Flasher", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                         if(result == System.Windows.Forms.DialogResult.OK)
                         {
-                            dc.flash('"' + mdloader.FullName + '"' + " --first --download " + '"' + profilesFolderDirectory.FullName + @"\" + lbProfiles.SelectedItem.ToString() + '"' + " --restart",
-                                profilesFolderDirectory.FullName + @"\" + lbProfiles.SelectedItem, mdloaderFolderDirectory.FullName);
+                            dc.flash('"' + mdloader.FullName + '"' + " --first --download " + '"' + profileDirectory + @"\" + lbProfiles.SelectedItem.ToString() + '"' + " --restart",
+                                profileDirectory + @"\" + lbProfiles.SelectedItem, mdloaderFolderDirectory.FullName);
                         }
                         else
                         {
                             DialogResult result2 = System.Windows.Forms.MessageBox.Show("Cancel Flashing?", "Drop Keyboard Flasher", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                             if(result2 == System.Windows.Forms.DialogResult.No)
                             {
-                                dc.flash(mdloader.FullName + " --first --download " + '"' + profilesFolderDirectory.FullName + @"\" + lbProfiles.SelectedItem.ToString() + '"' + " --restart",
-                                    profilesFolderDirectory.FullName + @"\" + lbProfiles.SelectedItem, mdloaderFolderDirectory.FullName);
+                                dc.flash(mdloader.FullName + " --first --download " + '"' + profileDirectory + @"\" + lbProfiles.SelectedItem.ToString() + '"' + " --restart",
+                                    profileDirectory + @"\" + lbProfiles.SelectedItem, mdloaderFolderDirectory.FullName);
                             }
                         }
          
@@ -104,11 +114,51 @@ namespace MassDropProfileManager
         private void refreshListBox ()
         {
             lbProfiles.Items.Clear();
-            FileInfo[] Files = profilesFolderDirectory.GetFiles("*.bin");
+            FileInfo[] Files = new DirectoryInfo(profileDirectory).GetFiles();
             foreach (FileInfo file in Files)
             {
                 lbProfiles.Items.Add(file);
             }
+        }
+        private void mnuDumpFirmware_Click(object sender, RoutedEventArgs e)
+        {
+            var savePrompt = new SaveFileDialog();
+            savePrompt.Filter = "Firmware Files (*.bin)|*.bin";
+            savePrompt.InitialDirectory = profileDirectory;
+            savePrompt.ShowDialog();
+            DialogResult result = System.Windows.Forms.MessageBox.Show("Put keyboard into flashing mode by pressing and holding fn + b for a few seconds, " +
+                                                                        "or press the reset button on the back of the keyboard.", "Drop Keyboard Flasher", 
+                                                                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                dc.dumpFirmware('"' + mdloader.FullName + '"' + @" --first --upload " + '"' + savePrompt.FileName +
+                                '"' + @" --addr 0x4000 --size 0x10000", savePrompt.FileName, mdloaderFolderDirectory.FullName);
+            }
+            else
+            {
+                DialogResult result2 = System.Windows.Forms.MessageBox.Show("Cancel Dumping?", "Drop Keyboard Flasher", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (result2 == System.Windows.Forms.DialogResult.No)
+                {
+                    dc.dumpFirmware('"' + mdloader.FullName + '"' + @" --first --upload " + '"' + savePrompt.FileName +
+                                    '"' + @" --addr 0x4000 --size 0x10000", savePrompt.FileName, mdloaderFolderDirectory.FullName);
+                }
+            }
+
+        }
+        private void mnuSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings settings = new Settings();
+            settings.ShowDialog();
+            if (Properties.Settings.Default.UseDefaultProfileFolder)
+            {
+                profileDirectory = profilesFolderDirectory.FullName;
+                Properties.Settings.Default.ProfileFolderLocation = profilesFolderDirectory.FullName;
+            }
+            else
+            {
+                profileDirectory = Properties.Settings.Default.ProfileFolderLocation;
+            }
+            refreshListBox();
         }
     }
 
@@ -147,6 +197,18 @@ namespace MassDropProfileManager
         {
             ConsoleOutput = new ObservableCollection<string>();
             ConsoleOutput.Add("Flashing " + filelocation);
+            runCommand(command, mdloaderfolder);
+        }
+        
+        public void dumpFirmware(string command, string filelocation, string mdloaderfolder)
+        {
+            ConsoleOutput = new ObservableCollection<string>();
+            ConsoleOutput.Add("Dumping to " + filelocation);
+            runCommand(command, mdloaderfolder);
+        }
+
+        public void runCommand(string command, string mdloaderfolder)
+        {
             using (Process p = new Process())
             {
                 p.StartInfo = new ProcessStartInfo("cmd.exe")
